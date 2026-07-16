@@ -1,0 +1,18 @@
+name: v9-tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -r VQ_linear_kinetic_transport_solver_v9/requirements.txt
+      - run: pip install -e VQ_linear_kinetic_transport_solver_v9
+      - run: pytest -q VQ_linear_kinetic_transport_solver_v9/tests
+      - run: make -C VQ_linear_kinetic_transport_solver_v9 mixed-order-smoke
